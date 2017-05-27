@@ -24,6 +24,9 @@ import com.aohua.model.UserList;
 import com.aohua.service.Se_OrderService;
 import com.aohua.service.UserListService;
 
+/**
+ * qin
+ */
 @Controller
 public class Se_OrderController {
 	@Autowired
@@ -32,7 +35,7 @@ public class Se_OrderController {
 	@Autowired
 	private UserListService userListService;
 
-	//µÇÂ¼
+	//ï¿½ï¿½Â¼
 	@RequestMapping("login")
 	public void getUserid(HttpServletRequest req,HttpServletResponse res ) throws IOException{
 		System.out.println(req.getParameter("user"));
