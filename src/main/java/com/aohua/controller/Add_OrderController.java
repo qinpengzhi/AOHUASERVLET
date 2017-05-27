@@ -13,6 +13,9 @@ import org.springframework.web.bind.annotation.RequestMapping;
 
 import com.aohua.service.DepartMentService;
 
+/**
+ * qin is prefect
+ */
 @Controller
 public class Add_OrderController {
 	@Autowired
