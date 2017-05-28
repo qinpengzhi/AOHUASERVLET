@@ -24,6 +24,7 @@ public class Add_OrderController {
 	public void getUserid(HttpServletRequest req,HttpServletResponse res ) throws IOException{
 		JSONObject jsonObject = JSONObject.fromObject(departMentService.getDepartMent());
 		String aaa=jsonObject.toString();
+		System.out.println("hahah");
 		res.getWriter().println(jsonObject.toString());
 	}
 }
