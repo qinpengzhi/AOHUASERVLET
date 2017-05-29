@@ -13,7 +13,8 @@ import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 
 import com.aohua.service.DepartMentService;
-import com.aohua.service.TransportModelService;
+import com.aohua.service.SettleModeService;
+import com.aohua.service.TransportModeService;
 
 /**
  * qin is prefect
@@ -23,7 +24,9 @@ public class Add_OrderController {
 	@Autowired
 	private DepartMentService departMentService;
 	@Autowired
-	private TransportModelService transportModelService;
+	private TransportModeService transportModelService;
+	@Autowired
+	private SettleModeService settleModeService;
 	//获取所属部门列表
 	@RequestMapping("getdepartment")
 	public void getdepartment(HttpServletRequest req,HttpServletResponse res ) throws IOException{
@@ -33,9 +36,17 @@ public class Add_OrderController {
 		System.out.println(jsonObject.toString());
 	}
 	//获取运输方式列表
-	@RequestMapping("gettransportmodel")
-	public void gettransportmodel(HttpServletRequest req,HttpServletResponse res ) throws IOException{
+	@RequestMapping("gettransportmode")
+	public void gettransportmode(HttpServletRequest req,HttpServletResponse res ) throws IOException{
 		JSONArray jsonObject=JSONArray.fromObject(transportModelService.getTransportMode());
+		res.setContentType("text/html;charset=utf-8");
+		res.getWriter().println(jsonObject.toString());
+		System.out.println(jsonObject.toString());
+	}
+	//获取结算方式列表
+	@RequestMapping("getsettlemode")
+	public void getsettlemode(HttpServletRequest req,HttpServletResponse res ) throws IOException{
+		JSONArray jsonObject=JSONArray.fromObject(settleModeService.getSettleMode());
 		res.setContentType("text/html;charset=utf-8");
 		res.getWriter().println(jsonObject.toString());
 		System.out.println(jsonObject.toString());

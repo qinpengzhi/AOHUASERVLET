@@ -8,7 +8,7 @@ import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.stereotype.Repository;
 
 @Repository
-public class TransportModelDao {
+public class TransportModeDao {
 	@Autowired
 	private JdbcTemplate jdbcTemplate;
 	

@@ -6,13 +6,12 @@ import java.util.Map;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import com.aohua.dao.DepartMentDao;
-import com.aohua.dao.TransportModelDao;
+import com.aohua.dao.TransportModeDao;
 
 @Service
-public class TransportModelService {
+public class TransportModeService {
 	@Autowired
-	private TransportModelDao transportModelDao;
+	private TransportModeDao transportModelDao;
 	public List<Map<String,Object>> getTransportMode(){
 		return transportModelDao.getTransportMode();
 	}
