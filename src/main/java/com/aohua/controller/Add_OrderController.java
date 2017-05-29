@@ -13,6 +13,8 @@ import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 
 import com.aohua.service.DepartMentService;
+import com.aohua.service.EmployeeService;
+import com.aohua.service.Se_CustomerService;
 import com.aohua.service.SettleModeService;
 import com.aohua.service.TransportModeService;
 
@@ -27,6 +29,10 @@ public class Add_OrderController {
 	private TransportModeService transportModelService;
 	@Autowired
 	private SettleModeService settleModeService;
+	@Autowired
+	private Se_CustomerService se_CustomerService;
+	@Autowired
+	private EmployeeService employeeService;
 	//获取所属部门列表
 	@RequestMapping("getdepartment")
 	public void getdepartment(HttpServletRequest req,HttpServletResponse res ) throws IOException{
@@ -47,6 +53,22 @@ public class Add_OrderController {
 	@RequestMapping("getsettlemode")
 	public void getsettlemode(HttpServletRequest req,HttpServletResponse res ) throws IOException{
 		JSONArray jsonObject=JSONArray.fromObject(settleModeService.getSettleMode());
+		res.setContentType("text/html;charset=utf-8");
+		res.getWriter().println(jsonObject.toString());
+		System.out.println(jsonObject.toString());
+	}
+	//获取所有客户的列表
+	@RequestMapping("getse_customer")
+	public void getse_customer(HttpServletRequest req,HttpServletResponse res ) throws IOException{
+		JSONArray jsonObject=JSONArray.fromObject(se_CustomerService.getSe_Customer());
+		res.setContentType("text/html;charset=utf-8");
+		res.getWriter().println(jsonObject.toString());
+		System.out.println(jsonObject.toString());
+	}
+	//获取业务员列表
+	@RequestMapping("getemployee")
+	public void getemployee(HttpServletRequest req,HttpServletResponse res ) throws IOException{
+		JSONArray jsonObject=JSONArray.fromObject(employeeService.getEmployee());
 		res.setContentType("text/html;charset=utf-8");
 		res.getWriter().println(jsonObject.toString());
 		System.out.println(jsonObject.toString());

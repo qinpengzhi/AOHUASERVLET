@@ -1,4 +1,5 @@
 package com.aohua.dao;
+
 import java.util.List;
 import java.util.Map;
 
@@ -7,17 +8,12 @@ import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.stereotype.Repository;
 
 @Repository
-public class DepartMentDao {
+public class EmployeeDao {
 	@Autowired
 	private JdbcTemplate jdbcTemplate;
-	
-	public List<Map<String,Object>> getDepartMent(){
-		String sql="select DeptID,DeptName from department";
+	public List<Map<String,Object>> getEmployee(){
+		String sql="select EmpID,EmpName from employee";
 		List<Map<String,Object>> list=jdbcTemplate.queryForList(sql);
-//		Map<Integer,String> returnMap=new HashMap<Integer, String>();
-//		for(int i=0;i<list.size();i++){
-//			returnMap.put((Integer)list.get(i).get("DeptID"), (String)list.get(i).get("DeptName"));
-//		}
 		return list;
 	}
 }
