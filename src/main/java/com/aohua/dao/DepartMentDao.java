@@ -14,7 +14,7 @@ public class DepartMentDao {
 	private JdbcTemplate jbTemplate;
 	
 	public List<Map<String,Object>> getDepartMent(){
-		String sql="select DeptID,DeptName from DepartMent";
+		String sql="select DeptID,DeptName from department";
 		List<Map<String,Object>> list=jbTemplate.queryForList(sql);
 //		Map<Integer,String> returnMap=new HashMap<Integer, String>();
 //		for(int i=0;i<list.size();i++){

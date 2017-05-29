@@ -35,14 +35,17 @@ public class Se_OrderController {
 	@Autowired
 	private UserListService userListService;
 
-	//ï¿½ï¿½Â¼
+	//µÇÂ¼
 	@RequestMapping("login")
 	public void getUserid(HttpServletRequest req,HttpServletResponse res ) throws IOException{
+		//ÉèÖÃ±àÂë£¬½â¾öÖÐÎÄÂÒÂë
+		req.setCharacterEncoding("utf-8");
 		System.out.println(req.getParameter("user"));
 		String name=req.getParameter("user");
 		String password=req.getParameter("pwd");
 		int userid=userListService.getUserID(name, password);
-		res.setContentType("text/html;charset=GBK");
+		res.setContentType("text/html;charset=utf-8");
+		
 		if(userid>0){
 			req.getSession(true).setAttribute("userid", userid);
 		}

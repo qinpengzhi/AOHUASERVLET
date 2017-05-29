@@ -5,6 +5,7 @@ import java.io.IOException;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import net.sf.json.JSONArray;
 import net.sf.json.JSONObject;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -22,8 +23,8 @@ public class Add_OrderController {
 	private DepartMentService departMentService;
 	@RequestMapping("getdepartment")
 	public void getUserid(HttpServletRequest req,HttpServletResponse res ) throws IOException{
-		JSONObject jsonObject = JSONObject.fromObject(departMentService.getDepartMent());
-		String aaa=jsonObject.toString();
+		JSONArray jsonObject=JSONArray.fromObject(departMentService.getDepartMent());
+		res.setContentType("text/html;charset=utf-8");
 		res.getWriter().println(jsonObject.toString());
 	}
 }
