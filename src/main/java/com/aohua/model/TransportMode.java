@@ -1,7 +1,7 @@
 package com.aohua.model;
 
 //‘À ‰∑Ω Ω
-public class TransportModel {
+public class TransportMode {
 	private Integer TransportID;
 	private String TransportName;
 	public Integer getTransportID() {
