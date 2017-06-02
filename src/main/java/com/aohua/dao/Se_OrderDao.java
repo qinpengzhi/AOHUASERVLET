@@ -2,6 +2,7 @@ package com.aohua.dao;
 
 import java.sql.PreparedStatement;
 import java.sql.SQLException;
+import java.sql.Types;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -36,22 +37,42 @@ public class Se_OrderDao {
 			         		+ "values (?,?,?,?,?,?,?,?,?,?,?,?,?,?,?)";   
 				 PreparedStatement ps = con.prepareStatement(sql,Statement.RETURN_GENERATED_KEYS);  
 				 ps.setString(1, se_Order.getOrderCode());
-				 int aa=se_Order.getCustID();
-				 System.out.println(se_Order.getCustID());
-				 ps.setInt(2, se_Order.getCustID());
+				 if(se_Order.getCustID()==null)
+					 ps.setNull(2,Types.INTEGER);
+				 else ps.setInt(2, se_Order.getCustID());
 				 ps.setString(3, se_Order.getContractCode());
-				 ps.setInt(4, se_Order.getSellerID());
+				 if(se_Order.getSellerID()==null)
+					 ps.setNull(4,Types.INTEGER);
+				 else ps.setInt(4, se_Order.getSellerID());
 				 ps.setString(5, se_Order.getSignAddr());
-				 ps.setString(6, se_Order.getSignDate());
+				 if(se_Order.getSignDate().equals(""))
+					 ps.setNull(6, Types.DATE);
+				 else ps.setString(6, se_Order.getSignDate());
 				 ps.setString(7, se_Order.getDeliveryAddr());
-				 ps.setString(8, se_Order.getDeliveryDate());
-				 ps.setDouble(9, se_Order.getFreight());
-				 ps.setInt(10, se_Order.getTransportID());
-				 ps.setInt(11, se_Order.getSettleID());
-				 ps.setInt(12, se_Order.getReceDays());
-				 ps.setInt(13, se_Order.getDeptID());
-				 ps.setInt(14, se_Order.getWritePersonID());
-				 ps.setString(15, se_Order.getWriteDate());
+				 if(se_Order.getDeliveryDate().equals(""))
+					 ps.setNull(8, Types.DATE);
+				 else ps.setString(8, se_Order.getDeliveryDate());
+				 if(se_Order.getFreight()==null)
+					 ps.setNull(9, Types.DOUBLE);
+				 else ps.setDouble(9, se_Order.getFreight());
+				 if(se_Order.getTransportID()==null)
+					 ps.setNull(10, Types.INTEGER);
+				 else ps.setInt(10, se_Order.getTransportID());
+				 if(se_Order.getSettleID()==null)
+					 ps.setNull(11, Types.INTEGER);
+				 else ps.setInt(11, se_Order.getSettleID());
+				 if(se_Order.getReceDays()==null)
+					 ps.setNull(12, Types.INTEGER);
+				 else ps.setInt(12, se_Order.getReceDays());
+				 if(se_Order.getDeptID()==null)
+					 ps.setNull(13, Types.INTEGER);
+				 else ps.setInt(13, se_Order.getDeptID());
+				 if(se_Order.getWritePersonID()==null)
+					 ps.setNull(14, Types.INTEGER);
+				 else ps.setInt(14, se_Order.getWritePersonID());
+				 if(se_Order.getWriteDate()==null)
+					 ps.setNull(15, Types.INTEGER);
+				 else ps.setString(15, se_Order.getWriteDate());
 				return ps;
 			}
 		}, keyHolder);
@@ -65,14 +86,28 @@ public class Se_OrderDao {
 				+ "DtNotes,PKGNum) values (?,?,?,?,?,?,?,?)";
 		jdbcTemplate.batchUpdate(sql, new BatchPreparedStatementSetter() {
 			public void setValues(PreparedStatement ps, int i) throws SQLException {
-				ps.setInt(1, list.get(i).getOrderID());
-				ps.setInt(2, list.get(i).getGoodsID());
-				ps.setDouble(3, list.get(i).getNumber());
-				ps.setDouble(4, list.get(i).getPrice());
-				ps.setDouble(5, list.get(i).getMoney());
-				ps.setString(6, list.get(i).getDtDeliveryDate());
+				if(list.get(i).getOrderID()==null)
+					ps.setNull(1, Types.INTEGER);
+				else ps.setInt(1, list.get(i).getOrderID());
+				if(list.get(i).getGoodsID()==null)
+					ps.setNull(2, Types.INTEGER);
+				else ps.setInt(2, list.get(i).getGoodsID());
+				if(list.get(i).getNumber()==null)
+					ps.setNull(3, Types.DOUBLE);
+				else ps.setDouble(3, list.get(i).getNumber());
+				if(list.get(i).getPrice()==null)
+					ps.setNull(4, Types.DOUBLE);
+				else ps.setDouble(4, list.get(i).getPrice());
+				if(list.get(i).getMoney()==null)
+					ps.setNull(5, Types.DOUBLE);
+				else ps.setDouble(5, list.get(i).getMoney());
+				if(list.get(i).getDtDeliveryDate().equals(""))
+					 ps.setNull(6, Types.DATE);
+				 else ps.setString(6, list.get(i).getDtDeliveryDate());
 				ps.setString(7, list.get(i).getDtNotes());
-				ps.setDouble(8, list.get(i).getPKGNum());
+				if(list.get(i).getPKGNum()==null)
+					ps.setNull(8, Types.DOUBLE);
+				else ps.setDouble(8, list.get(i).getPKGNum());
 			}
 			public int getBatchSize() {
 				 return list.size();
