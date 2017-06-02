@@ -1,6 +1,7 @@
 package com.aohua.service;
 
 import java.util.List;
+import java.util.Map;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -18,5 +19,8 @@ public class Pu_PurOrderService {
 	}
 	public void addDt(final List<Pu_PurOrderDt> list){
 		pu_PurOrderDao.addDt(list);
+	}
+	public List<Map<String,Object>> find(int WritePersonID){
+		return pu_PurOrderDao.find(WritePersonID);
 	}
 }

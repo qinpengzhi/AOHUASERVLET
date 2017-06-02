@@ -2,6 +2,7 @@ package com.aohua.service;
 
 
 import java.util.List;
+import java.util.Map;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -23,5 +24,8 @@ public class Se_OrderService {
 	}
 	public void update(Se_Order se_Order){
 		se_orderDao.update(se_Order);
+	}
+	public List<Map<String,Object>> find(int WritePersonID){
+		 return se_orderDao.find(WritePersonID);
 	}
 }

@@ -1,12 +1,14 @@
 package com.aohua.controller;
 
 import java.io.IOException;
+import java.nio.channels.WritePendingException;
 import java.util.Map;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
+import net.sf.json.JSONArray;
 import net.sf.json.JSONException;
 import net.sf.json.JSONObject;
 
@@ -22,6 +24,7 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.servlet.ModelAndView;
 
 import com.aohua.model.UserList;
+import com.aohua.service.Pu_PurOrderService;
 import com.aohua.service.Se_OrderService;
 import com.aohua.service.UserListService;
 
@@ -31,11 +34,11 @@ import com.aohua.service.UserListService;
 @Controller
 public class Se_OrderController {
 	@Autowired
-	private Se_OrderService se_OrderService;
-	
+	private Se_OrderService se_OrderService;	
 	@Autowired
 	private UserListService userListService;
-
+	@Autowired
+	private Pu_PurOrderService pu_PurOrderService;
 	//登录
 	@RequestMapping("login")
 	public void getUserid(HttpServletRequest req,HttpServletResponse res,HttpSession session) throws IOException{
@@ -58,5 +61,21 @@ public class Se_OrderController {
 		}
 		//JSONObject jo=JSONObject.fromObject(param);
 		
+	}
+	@RequestMapping("getse_orderlist")
+	public void getse_orderlist(HttpServletRequest req,HttpServletResponse res ) throws IOException{
+		int WritePersonID=1;//这里应该是对应的uerid
+		JSONArray jsonObject=JSONArray.fromObject(se_OrderService.find(WritePersonID));
+		res.setContentType("text/html;charset=utf-8");
+		res.getWriter().println(jsonObject.toString());
+		System.out.println(jsonObject.toString());
+	}
+	@RequestMapping("getpu_purorderlist")
+	public void getpu_purorderlist(HttpServletRequest req,HttpServletResponse res ) throws IOException{
+		int WritePersonID=1;//这里应该是对应的uerid
+		JSONArray jsonObject=JSONArray.fromObject(pu_PurOrderService.find(WritePersonID));
+		res.setContentType("text/html;charset=utf-8");
+		res.getWriter().println(jsonObject.toString());
+		System.out.println(jsonObject.toString());
 	}
 }
