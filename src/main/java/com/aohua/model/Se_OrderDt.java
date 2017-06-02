@@ -6,12 +6,12 @@ public class Se_OrderDt {
 	private Integer GoodsID;//物料Id
 	//查询物料表得到的物料name
 	private String GoodsName;
-	private Double Number;//数量
-	private Double Price;//价格
-	private Double Money;//金额
+	private Double Number=null;//数量
+	private Double Price=null;//价格
+	private Double Money=null;//金额
 	private String DtDeliveryDate;//交货日期
 	private String DtNotes;//备注
-	private Double PKGNum;//包装量
+	private Double PKGNum=null;//包装量
 	private Integer CLothClassID;//分类
 	private Double RevSpeed;//车速（保留字段）
 	private Double MaterialPrive;//原料单价（保留字段)

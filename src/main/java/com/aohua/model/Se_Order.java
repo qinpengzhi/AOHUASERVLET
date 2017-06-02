@@ -4,7 +4,7 @@ package com.aohua.model;
 public class Se_Order {	
 	private Integer OrderID;
 	private String OrderCode; //单号
-	private Integer CustID; //客户ID
+	private Integer CustID=null; //客户ID
 	//将CustID的id对应到custName，里面的CustName不是出自本张表
 	private String CustName; //客户
 	private Integer ClauseID; //条款ID

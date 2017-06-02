@@ -5,6 +5,7 @@ import java.util.Map;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
 
 import net.sf.json.JSONException;
 import net.sf.json.JSONObject;
@@ -37,7 +38,7 @@ public class Se_OrderController {
 
 	//登录
 	@RequestMapping("login")
-	public void getUserid(HttpServletRequest req,HttpServletResponse res ) throws IOException{
+	public void getUserid(HttpServletRequest req,HttpServletResponse res,HttpSession session) throws IOException{
 		//设置编码，解决中文乱码
 		req.setCharacterEncoding("utf-8");
 		System.out.println(req.getParameter("user"));
@@ -45,9 +46,8 @@ public class Se_OrderController {
 		String password=req.getParameter("pwd");
 		int userid=userListService.getUserID(name, password);
 		res.setContentType("text/html;charset=utf-8");
-		
 		if(userid>0){
-			req.getSession(true).setAttribute("userid", userid);
+			session.setAttribute("userid", userid);
 		}
 		try{
 			JSONObject jsonobj=new JSONObject();
