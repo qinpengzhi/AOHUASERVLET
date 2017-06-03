@@ -22,10 +22,13 @@ public class Se_OrderService {
 	public void addDt(final List<Se_OrderDt> list){
 		se_orderDao.addDt(list);
 	}
-	public void update(Se_Order se_Order){
-		se_orderDao.update(se_Order);
+	public List<Map<String,Object>> findbyid(int OrderID){
+		return se_orderDao.findbyid(OrderID);
+	}
+	public List<Map<String,Object>> finddtbyid(int OrderID){
+		return se_orderDao.finddtbyid(OrderID);
 	}
 	public List<Map<String,Object>> find(int WritePersonID){
-		 return se_orderDao.find(WritePersonID);
+		return se_orderDao.find(WritePersonID);
 	}
 }

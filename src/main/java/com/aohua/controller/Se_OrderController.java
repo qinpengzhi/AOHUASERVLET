@@ -78,4 +78,24 @@ public class Se_OrderController {
 		res.getWriter().println(jsonObject.toString());
 		System.out.println(jsonObject.toString());
 	}
+	@RequestMapping("getse_orderdetails")
+	public void getse_orderdetails(HttpServletRequest req,HttpServletResponse res ) throws IOException{
+		req.setCharacterEncoding("utf-8");
+		System.out.println("根据orderid来查找数据："+req.getParameter("orderid"));
+		int orderid=Integer.parseInt(req.getParameter("orderid"));
+		JSONArray jsonObject=JSONArray.fromObject(se_OrderService.findbyid(orderid));
+		res.setContentType("text/html;charset=utf-8");
+		res.getWriter().println(jsonObject.toString());
+		System.out.println(jsonObject.toString());
+	}
+	@RequestMapping("getse_orderdtdetails")
+	public void getse_orderdtdetails(HttpServletRequest req,HttpServletResponse res ) throws IOException{
+		req.setCharacterEncoding("utf-8");
+		System.out.println("根据orderid来查找数据："+req.getParameter("orderid"));
+		int orderid=Integer.parseInt(req.getParameter("orderid"));
+		JSONArray jsonObject=JSONArray.fromObject(se_OrderService.finddtbyid(orderid));
+		res.setContentType("text/html;charset=utf-8");
+		res.getWriter().println(jsonObject.toString());
+		System.out.println(jsonObject.toString());
+	}
 }

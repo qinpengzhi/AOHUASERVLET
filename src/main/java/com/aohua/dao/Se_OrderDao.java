@@ -115,8 +115,30 @@ public class Se_OrderDao {
 			}
 		});
 	}
-	public void update(Se_Order se_Order){
-		System.out.println("update se_order");
+	public List<Map<String,Object>> findbyid(int OrderID){
+		 //通过订单的id找到订单的所有消息
+		String sql="SELECT o.OrderCode,c.CustName,o.ContractCode,"
+				+ "e.EmpName as SellerName,o.SignAddr,date_format(o.SignDate , '%Y-%m-%d') as SignDate,"
+				+ "o.DeliveryAddr,date_format(o.DeliveryDate , '%Y-%m-%d') as DeliveryDate,o.Freight,t.TransportName,"
+				+ "s.SettleName,o.ReceDays,d.DeptName,u.UserName AS WritePersonName,"
+				+ "date_format(o.WriteDate , '%Y-%m-%d') as WriteDate FROM (((((se_order o "
+				+ "LEFT JOIN se_customer c on  o.CustID=c.CustID) "
+				+ "LEFT JOIN employee e ON  o.SellerID=e.EmpID) "
+				+ "LEFT JOIN transportmode t ON  o.TransportID=t.TransportID) "
+				+ "LEFT JOIN settlemode s ON  o.SettleID=s.SettleID) "
+				+ "LEFT JOIN department d ON o.DeptID=d.DeptID) LEFT JOIN "
+				+ "userlist u ON o.WritePersonID=u.UserID WHERE o.OrderID="+OrderID;
+		List<Map<String,Object>> list=jdbcTemplate.queryForList(sql);
+		return list;
+	}
+	public List<Map<String,Object>> finddtbyid(int OrderID){
+		 //通过订单的id找到订单详情的所有消息
+		String sql="SELECT g.GoodsName,o.Number,o.Price,"
+				+ "o.Money,date_format(o.DtDeliveryDate , '%Y-%m-%d') AS DtDeliveryDate,"
+				+ "o.DtNotes,o.PKGNum FROM se_orderdt o LEFT JOIN "
+				+ "goodscode g ON o.GoodsID=g.GoodsID WHERE o.OrderID="+OrderID;
+		List<Map<String,Object>> list=jdbcTemplate.queryForList(sql);
+		return list;
 	}
 	public List<Map<String,Object>> find(int WritePersonID){
 		//每个用户能看到的订单列表
