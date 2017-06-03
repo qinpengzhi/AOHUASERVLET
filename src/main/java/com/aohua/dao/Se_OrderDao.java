@@ -148,5 +148,9 @@ public class Se_OrderDao {
 		List<Map<String,Object>> list=jdbcTemplate.queryForList(sql);
 		return list;
 	}
-
+	public void update(int OrderID,int State,String AuditOpinion){
+		//订单审核，更新订单数据
+		String sql="UPDATE se_order SET State="+State+",AuditOpinion='"+AuditOpinion+"' WHERE OrderID="+ OrderID;
+		jdbcTemplate.update(sql);
+	}
 }

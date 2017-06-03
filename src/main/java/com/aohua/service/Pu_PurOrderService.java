@@ -29,4 +29,7 @@ public class Pu_PurOrderService {
 	public List<Map<String,Object>> finddtbyid(int OrderID){
 		return pu_PurOrderDao.finddtbyid(OrderID);
 	}
+	public void update(int PurOrderID,int State,String AuditOpinion){
+		pu_PurOrderDao.update(PurOrderID, State, AuditOpinion);
+	}
 }

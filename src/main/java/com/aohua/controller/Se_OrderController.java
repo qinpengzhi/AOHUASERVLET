@@ -118,4 +118,24 @@ public class Se_OrderController {
 		res.getWriter().println(jsonObject.toString());
 		System.out.println(jsonObject.toString());
 	}
+	//ÉóºËÏúÊÛ¶©µ¥
+	@RequestMapping("updatese_order")
+	public void updatese_order(HttpServletRequest req,HttpServletResponse res ) throws IOException{
+		req.setCharacterEncoding("utf-8");
+		int OrderID=Integer.parseInt(req.getParameter("orderid"));
+		int State=Integer.parseInt(req.getParameter("state"));
+		String AuditOpinion=req.getParameter("AuditOpinion");
+		se_OrderService.update(OrderID, State, AuditOpinion);
+		
+	}
+	//ÉóºË²É¹º¶©µ¥
+	@RequestMapping("updatepu_purorder")
+	public void updatepu_purorder(HttpServletRequest req,HttpServletResponse res ) throws IOException{
+		req.setCharacterEncoding("utf-8");
+		int PurOrderID=Integer.parseInt(req.getParameter("orderid"));
+		int State=Integer.parseInt(req.getParameter("state"));
+		String AuditOpinion=req.getParameter("AuditOpinion");
+		pu_PurOrderService.update(PurOrderID, State, AuditOpinion);
+		
+	}
 }

@@ -135,4 +135,9 @@ public class Pu_PurOrderDao {
 		List<Map<String,Object>> list=jdbcTemplate.queryForList(sql);
 		return list;
 	}
+	public void update(int PurOrderID,int State,String AuditOpinion){
+		//订单审核，更新订单数据
+		String sql="UPDATE pu_purorder SET State="+State+",AuditOpinion='"+AuditOpinion+"' WHERE PurOrderID="+ PurOrderID;
+		jdbcTemplate.update(sql);
+	}
 }

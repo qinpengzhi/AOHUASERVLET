@@ -31,4 +31,7 @@ public class Se_OrderService {
 	public List<Map<String,Object>> find(int WritePersonID){
 		return se_orderDao.find(WritePersonID);
 	}
+	public void update(int OrderID,int State,String AuditOpinion){
+		se_orderDao.update(OrderID, State, AuditOpinion);
+	}
 }
