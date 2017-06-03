@@ -23,4 +23,10 @@ public class Pu_PurOrderService {
 	public List<Map<String,Object>> find(int WritePersonID){
 		return pu_PurOrderDao.find(WritePersonID);
 	}
+	public List<Map<String,Object>> findbyid(int OrderID){
+		return pu_PurOrderDao.findbyid(OrderID);
+	}
+	public List<Map<String,Object>> finddtbyid(int OrderID){
+		return pu_PurOrderDao.finddtbyid(OrderID);
+	}
 }

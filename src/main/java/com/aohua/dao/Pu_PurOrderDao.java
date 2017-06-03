@@ -105,6 +105,28 @@ public class Pu_PurOrderDao {
 			}
 		});
 	}
+	public List<Map<String,Object>> findbyid(int OrderID){
+		 //通过订单的id找到订单的所有消息
+		String sql="SELECT p.PurOrderCode,e.EmpName as BuyerName,s.Name as SupplierName,"
+				+ "p.ContractCode,sm.SettleName,p.PayDays,p.SignAddr,date_format(p.SignDate , '%Y-%m-%d')as SignDate,"
+				+ "p.DeliveryAddr,date_format(p.AogDate, '%Y-%m-%d')as AogDate,u.UserName as WritePersonName,"
+				+ "date_format(p.WriteDate, '%Y-%m-%d')as WriteDate FROM (((pu_purorder p "
+				+ "LEFT JOIN employee e ON p.BuyerID=e.EmpID) "
+				+ "LEFT JOIN pu_supplier s ON p.SupplierID=s.SupplierID) "
+				+ "LEFT JOIN settlemode sm ON p.SettleID=sm.SettleID) "
+				+ "LEFT JOIN userlist u ON p.WritePersonID=u.UserID WHERE p.PurOrderID="+OrderID;
+		List<Map<String,Object>> list=jdbcTemplate.queryForList(sql);
+		return list;
+	}
+	public List<Map<String,Object>> finddtbyid(int OrderID){
+		 //通过订单的id找到订单详情的所有消息
+		String sql="SELECT g.GoodsName,o.Number,o.Price,o.Money,"
+				+ "date_format(o.DtAogDate , '%Y-%m-%d') AS DtAogDate,"
+				+ "o.DtNotes,o.PKGNum FROM pu_purorderdt o "
+				+ "LEFT JOIN goodscode g ON o.GoodsID=g.GoodsID WHERE o.PurOrderID="+OrderID;
+		List<Map<String,Object>> list=jdbcTemplate.queryForList(sql);
+		return list;
+	}
 	public List<Map<String,Object>> find(int WritePersonID){
 		//每个用户能看到的订单列表
 		String sql="select p.PurOrderID,p.PurOrderCode,s.Name,p.State,"
