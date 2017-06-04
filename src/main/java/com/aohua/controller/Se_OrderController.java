@@ -2,6 +2,7 @@ package com.aohua.controller;
 
 import java.io.IOException;
 import java.nio.channels.WritePendingException;
+import java.util.List;
 import java.util.Map;
 
 import javax.servlet.http.HttpServletRequest;
@@ -41,39 +42,56 @@ public class Se_OrderController {
 	private Pu_PurOrderService pu_PurOrderService;
 	//登录
 	@RequestMapping("login")
-	public void getUserid(HttpServletRequest req,HttpServletResponse res,HttpSession session) throws IOException{
+	public void getUserid(HttpServletRequest req,HttpServletResponse res) throws IOException{
 		//设置编码，解决中文乱码
 		req.setCharacterEncoding("utf-8");
 		System.out.println(req.getParameter("user"));
 		String name=req.getParameter("user");
 		String password=req.getParameter("pwd");
-		int userid=userListService.getUserID(name, password);
+		List<Map<String,Object>> userlist=userListService.getUserID(name, password);
 		res.setContentType("text/html;charset=utf-8");
-		if(userid>0){
-			session.setAttribute("userid", userid);
+		if(userlist.size()>0){
+			try{
+				JSONObject jsonobj=new JSONObject();
+				jsonobj.put("userid", userlist.get(0).get("UserID"));
+				jsonobj.put("examine", userlist.get(0).get("Examine"));
+				res.getWriter().println(jsonobj.toString());
+				System.out.println(jsonobj.toString());
+			}catch(JSONException je){
+				je.printStackTrace();
+			}
+		}else{
+			try{
+				JSONObject jsonobj=new JSONObject();
+				jsonobj.put("userid", 0);
+				jsonobj.put("examine","");
+				System.out.println(jsonobj.toString());
+				res.getWriter().println(jsonobj.toString());
+			}catch(JSONException je){
+				je.printStackTrace();
+			}
 		}
-		try{
-			JSONObject jsonobj=new JSONObject();
-			jsonobj.put("userid", userid);
-			res.getWriter().println(jsonobj.toString());
-		}catch(JSONException je){
-			je.printStackTrace();
-		}
-		//JSONObject jo=JSONObject.fromObject(param);
-		
 	}
 	@RequestMapping("getse_orderlist")
-	public void getse_orderlist(HttpServletRequest req,HttpServletResponse res ) throws IOException{
-		int WritePersonID=1;//这里应该是对应的uerid
-		JSONArray jsonObject=JSONArray.fromObject(se_OrderService.find(WritePersonID));
+	public void getse_orderlist(HttpServletRequest req,HttpServletResponse res,HttpSession httpSession) throws IOException{
+	//	int WritePersonID=1;//这里应该是对应的uerid 没能用session用的是android客户端保持登录信息
+		req.setCharacterEncoding("utf-8");
+		System.out.println("这里的userid是："+req.getParameter("userid"));
+		int WritePersonID=Integer.parseInt(req.getParameter("userid"));
+		int examine=Integer.parseInt(req.getParameter("examine"));
+		JSONArray jsonObject=JSONArray.fromObject(se_OrderService.find(WritePersonID,examine));
 		res.setContentType("text/html;charset=utf-8");
 		res.getWriter().println(jsonObject.toString());
 		System.out.println(jsonObject.toString());
 	}
 	@RequestMapping("getpu_purorderlist")
 	public void getpu_purorderlist(HttpServletRequest req,HttpServletResponse res ) throws IOException{
-		int WritePersonID=1;//这里应该是对应的uerid
-		JSONArray jsonObject=JSONArray.fromObject(pu_PurOrderService.find(WritePersonID));
+		//int WritePersonID=1;//这里应该是对应的uerid
+		req.setCharacterEncoding("utf-8");
+		System.out.println("这里的userid是："+req.getParameter("userid"));
+		int WritePersonID=Integer.parseInt(req.getParameter("userid"));
+		int examine=Integer.parseInt(req.getParameter("examine"));
+		JSONArray jsonObject=JSONArray.fromObject(pu_PurOrderService.find(WritePersonID,examine));
 		res.setContentType("text/html;charset=utf-8");
 		res.getWriter().println(jsonObject.toString());
 		System.out.println(jsonObject.toString());

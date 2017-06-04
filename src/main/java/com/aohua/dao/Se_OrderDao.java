@@ -121,7 +121,7 @@ public class Se_OrderDao {
 				+ "e.EmpName as SellerName,o.SignAddr,date_format(o.SignDate , '%Y-%m-%d') as SignDate,"
 				+ "o.DeliveryAddr,date_format(o.DeliveryDate , '%Y-%m-%d') as DeliveryDate,o.Freight,t.TransportName,"
 				+ "s.SettleName,o.ReceDays,d.DeptName,u.UserName AS WritePersonName,"
-				+ "date_format(o.WriteDate , '%Y-%m-%d') as WriteDate FROM (((((se_order o "
+				+ "date_format(o.WriteDate , '%Y-%m-%d') as WriteDate,o.AuditOpinion FROM (((((se_order o "
 				+ "LEFT JOIN se_customer c on  o.CustID=c.CustID) "
 				+ "LEFT JOIN employee e ON  o.SellerID=e.EmpID) "
 				+ "LEFT JOIN transportmode t ON  o.TransportID=t.TransportID) "
@@ -140,12 +140,21 @@ public class Se_OrderDao {
 		List<Map<String,Object>> list=jdbcTemplate.queryForList(sql);
 		return list;
 	}
-	public List<Map<String,Object>> find(int WritePersonID){
+	public List<Map<String,Object>> find(int WritePersonID,int Examine){
 		//每个用户能看到的订单列表
-		String sql="select s.OrderID,s.OrderCode,c.CustName,s.State,"
-				+ "date_format(s.WriteDate , '%Y-%m-%d') as WriteDate from se_order s,se_customer c "
-				+ "WHERE s.CustID=c.CustID AND s.WritePersonID="+WritePersonID+" order by s.State";
-		List<Map<String,Object>> list=jdbcTemplate.queryForList(sql);
+		List<Map<String,Object>> list=null;
+		if(Examine==0){
+			//没有审核权限，只能看到自己的
+			String sql="select s.OrderID,s.OrderCode,c.CustName,s.State,"
+					+ "date_format(s.WriteDate , '%Y-%m-%d') as WriteDate from se_order s left join se_customer c "
+					+ "on s.CustID=c.CustID where s.WritePersonID="+WritePersonID+" order by s.State";
+			list=jdbcTemplate.queryForList(sql);
+		}else if(Examine==1){
+			String sql="select s.OrderID,s.OrderCode,c.CustName,s.State,"
+					+ "date_format(s.WriteDate , '%Y-%m-%d') as WriteDate from se_order s left join se_customer c "
+					+ "on s.CustID=c.CustID  order by s.State";
+			list=jdbcTemplate.queryForList(sql);
+		}
 		return list;
 	}
 	public void update(int OrderID,int State,String AuditOpinion){

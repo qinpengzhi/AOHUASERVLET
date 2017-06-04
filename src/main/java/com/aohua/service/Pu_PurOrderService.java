@@ -20,8 +20,8 @@ public class Pu_PurOrderService {
 	public void addDt(final List<Pu_PurOrderDt> list){
 		pu_PurOrderDao.addDt(list);
 	}
-	public List<Map<String,Object>> find(int WritePersonID){
-		return pu_PurOrderDao.find(WritePersonID);
+	public List<Map<String,Object>> find(int WritePersonID,int Examine){
+		return pu_PurOrderDao.find(WritePersonID,Examine);
 	}
 	public List<Map<String,Object>> findbyid(int OrderID){
 		return pu_PurOrderDao.findbyid(OrderID);

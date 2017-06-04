@@ -28,8 +28,8 @@ public class Se_OrderService {
 	public List<Map<String,Object>> finddtbyid(int OrderID){
 		return se_orderDao.finddtbyid(OrderID);
 	}
-	public List<Map<String,Object>> find(int WritePersonID){
-		return se_orderDao.find(WritePersonID);
+	public List<Map<String,Object>> find(int WritePersonID,int Examine){
+		return se_orderDao.find(WritePersonID,Examine);
 	}
 	public void update(int OrderID,int State,String AuditOpinion){
 		se_orderDao.update(OrderID, State, AuditOpinion);

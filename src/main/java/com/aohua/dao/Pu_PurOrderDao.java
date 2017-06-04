@@ -110,7 +110,7 @@ public class Pu_PurOrderDao {
 		String sql="SELECT p.PurOrderCode,e.EmpName as BuyerName,s.Name as SupplierName,"
 				+ "p.ContractCode,sm.SettleName,p.PayDays,p.SignAddr,date_format(p.SignDate , '%Y-%m-%d')as SignDate,"
 				+ "p.DeliveryAddr,date_format(p.AogDate, '%Y-%m-%d')as AogDate,u.UserName as WritePersonName,"
-				+ "date_format(p.WriteDate, '%Y-%m-%d')as WriteDate FROM (((pu_purorder p "
+				+ "date_format(p.WriteDate, '%Y-%m-%d')as WriteDate,p.AuditOpinion FROM (((pu_purorder p "
 				+ "LEFT JOIN employee e ON p.BuyerID=e.EmpID) "
 				+ "LEFT JOIN pu_supplier s ON p.SupplierID=s.SupplierID) "
 				+ "LEFT JOIN settlemode sm ON p.SettleID=sm.SettleID) "
@@ -127,12 +127,22 @@ public class Pu_PurOrderDao {
 		List<Map<String,Object>> list=jdbcTemplate.queryForList(sql);
 		return list;
 	}
-	public List<Map<String,Object>> find(int WritePersonID){
+	public List<Map<String,Object>> find(int WritePersonID,int Examine){
 		//每个用户能看到的订单列表
-		String sql="select p.PurOrderID,p.PurOrderCode,s.Name,p.State,"
-				+ "date_format(p.WriteDate , '%Y-%m-%d') as WriteDate from pu_purorder p , pu_supplier s "
-				+ "WHERE p.SupplierID=s.SupplierID AND p.WritePersonID="+WritePersonID+" order by p.State";
-		List<Map<String,Object>> list=jdbcTemplate.queryForList(sql);
+		List<Map<String,Object>> list = null;
+		if(Examine==0){
+			//没有审核权限，只能看到自己的订单
+			String sql="select p.PurOrderID,p.PurOrderCode,s.Name,p.State,"
+					+ "date_format(p.WriteDate , '%Y-%m-%d') as WriteDate from pu_purorder p left join pu_supplier s "
+					+ "on p.SupplierID=s.SupplierID where p.WritePersonID="+WritePersonID+" order by p.State";
+			list=jdbcTemplate.queryForList(sql);
+		}else if(Examine==1){
+			//能看到所有的订单
+			String sql="select p.PurOrderID,p.PurOrderCode,s.Name,p.State,"
+					+ "date_format(p.WriteDate , '%Y-%m-%d') as WriteDate from pu_purorder p left join pu_supplier s "
+					+ "on p.SupplierID=s.SupplierID  order by p.State";
+			list=jdbcTemplate.queryForList(sql);
+		}
 		return list;
 	}
 	public void update(int PurOrderID,int State,String AuditOpinion){
